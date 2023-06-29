@@ -92,3 +92,7 @@ body {
 .toggle {
   text-align: "center";
 }
+
+.winner {
+  background-color: red;
+}
