@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ReactSwitch from "react-switch";
 
 function Square({ value, onSquareClick }) {
   return (
@@ -51,6 +52,26 @@ function Board({ xIsNext, squares, onPlay }) {
 }
 
 export default function Game() {
+  const [toggleStatus, changeToggleStatus] = useState(true);
+  const [description, setDescription] = useState("ascending");
+  const ToggleSwitch = () => {
+    const handleChange = () => {
+      changeToggleStatus(!toggleStatus);
+      if (toggleStatus) {
+        setDescription("decending");
+      } else {
+        setDescription("ascending");
+      }
+    };
+
+    return (
+      <div className="toggle">
+        <p>{description}</p>
+        <ReactSwitch checked={toggleStatus} onChange={handleChange} />
+      </div>
+    );
+  };
+
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
@@ -66,12 +87,18 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
+  if (!toggleStatus) {
+    history.reverse;
+  }
   const moves = history.map((squares, move) => {
     let description;
+    if (!toggleStatus) {
+      move = history.length - move;
+    }
     if (move == currentMove) {
       description = `You are at move ${move}`;
     } else if (move > 0) {
-      description = "Go to move #" + move;
+      description = `Go to move number ${move}`;
     } else {
       description = "Go to game start";
     }
@@ -88,6 +115,7 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
+        <ToggleSwitch />
         <ol>{moves}</ol>
       </div>
     </div>
