@@ -32,14 +32,14 @@ function Board({ xIsNext, squares, onPlay }) {
   for (let i = 0; i < 3; i++) {
     rows.push([]);
     for (let j = 0; j < 3; j++) {
-      const index = i * 3 + j;
-      const classNameGiven =
-        winner && winner[1].includes(index) ? "square winner" : "square";
+      const squareIndex = i * 3 + j;
+      const classesForSquare =
+        winner && winner[1].includes(squareIndex) ? "square winner" : "square";
       rows[i].push(
         <Square
-          value={squares[index]}
-          onSquareClick={() => handleClick(index)}
-          className={classNameGiven}
+          value={squares[squareIndex]}
+          onSquareClick={() => handleClick(squareIndex)}
+          className={classesForSquare}
         ></Square>
       );
     }
@@ -95,16 +95,43 @@ export default function Game() {
     history.reverse;
   }
   const moves = history.map((squares, move) => {
+    const changes = [];
+    console.log(history[move]);
+    for (let i = 0; i < history[move].length; i++) {
+      if (history[move][i] === null) {
+        changes.push(false);
+      } else if (move - 1 >= 0) {
+        changes.push(history[move][i] != history[move - 1][i]);
+      } else {
+        if (history[move][i] !== null) {
+          changes.push(true);
+        }
+      }
+    }
+    console.log(changes);
+    const changeIndex = changes.indexOf(true);
     let description;
     if (!toggleStatus) {
       move = history.length - 1 - move;
     }
-    if (move == currentMove) {
+    /*if (move == currentMove) {
       description = `You are at move ${move}`;
     } else if (move > 0) {
       description = `Go to move number ${move}`;
     } else {
       description = "Go to game start";
+    }*/
+    if (move == currentMove) {
+      description = `You are at move ${move}`;
+    } else if (move >= 0) {
+      description =
+        move % 2 == 0
+          ? `X placed at [${Math.floor(changeIndex / 3) + 1}, ${
+              (changeIndex % 3) + 1
+            }]`
+          : `O placed at [${Math.floor(changeIndex / 3) + 1}, ${
+              (changeIndex % 3) + 1
+            }]`;
     }
     return (
       <li key={move}>
