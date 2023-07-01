@@ -96,14 +96,13 @@ export default function Game() {
   }
   const moves = history.map((squares, move) => {
     const changes = [];
-    console.log(history[move]);
-    for (let i = 0; i < history[move].length; i++) {
-      if (history[move][i] === null) {
+    for (let i = 0; i < currentSquares.length; i++) {
+      if (currentSquares[i] === null) {
         changes.push(false);
-      } else if (move - 1 >= 0) {
-        changes.push(history[move][i] != history[move - 1][i]);
+      } else if (currentMove > 0) {
+        changes.push(currentSquares[i] !== history[currentMove - 1][i]);
       } else {
-        if (history[move][i] !== null) {
+        if (currentSquares[i] !== null) {
           changes.push(true);
         }
       }
