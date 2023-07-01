@@ -78,6 +78,7 @@ export default function Game() {
 
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [changeIndex, setChangeIndex] = useState({});
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -107,9 +108,9 @@ export default function Game() {
         }
       }
     }
-    console.log(changes);
-    const changeIndex = changes.indexOf(true);
-    let description;
+    if (move == currentMove - 1){
+    changeIndex[move] = changes.indexOf(true);}
+    console.log(changeIndex);
     if (!toggleStatus) {
       move = history.length - 1 - move;
     }
@@ -120,21 +121,24 @@ export default function Game() {
     } else {
       description = "Go to game start";
     }*/
-    if (move == currentMove) {
-      description = `You are at move ${move}`;
-    } else if (move >= 0) {
-      description =
-        move % 2 == 0
-          ? `X placed at [${Math.floor(changeIndex / 3) + 1}, ${
-              (changeIndex % 3) + 1
-            }]`
-          : `O placed at [${Math.floor(changeIndex / 3) + 1}, ${
-              (changeIndex % 3) + 1
-            }]`;
-    }
+    let description = (move) => {
+      if (move == currentMove) {
+        description = `You are at move ${move}`;
+      } else if (move >= 0) {
+        description =
+          move % 2 == 0
+            ? `X placed at [${Math.floor(changeIndex[move] / 3) + 1}, ${
+                (changeIndex[move] % 3) + 1
+              }]`
+            : `O placed at [${Math.floor(changeIndex[move] / 3) + 1}, ${
+                (changeIndex[move] % 3) + 1
+              }]`;
+      }
+      return description
+    };
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        <button onClick={() => jumpTo(move)}>{description(move)}</button>
       </li>
     );
   });
