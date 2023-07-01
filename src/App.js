@@ -108,19 +108,13 @@ export default function Game() {
         }
       }
     }
-    if (move == currentMove - 1){
-    changeIndex[move] = changes.indexOf(true);}
+    if (move == currentMove - 1) {
+      changeIndex[move] = changes.indexOf(true);
+    }
     console.log(changeIndex);
     if (!toggleStatus) {
       move = history.length - 1 - move;
     }
-    /*if (move == currentMove) {
-      description = `You are at move ${move}`;
-    } else if (move > 0) {
-      description = `Go to move number ${move}`;
-    } else {
-      description = "Go to game start";
-    }*/
     let description = (move) => {
       if (move == currentMove) {
         description = `You are at move ${move}`;
@@ -134,7 +128,7 @@ export default function Game() {
                 (changeIndex[move] % 3) + 1
               }]`;
       }
-      return description
+      return description;
     };
     return (
       <li key={move}>
