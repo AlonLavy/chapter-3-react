@@ -25,7 +25,7 @@ function Board({ xIsNext, squares, onPlay }) {
 
   const winner = calculateWinner(squares);
   const status = winner
-    ? "Winner: " + winner[0]
+    ? "Winner: " + winner.who
     : "Next player: " + (xIsNext ? "X" : "O");
 
   const rows = [];
@@ -34,7 +34,7 @@ function Board({ xIsNext, squares, onPlay }) {
     for (let j = 0; j < 3; j++) {
       const squareIndex = i * 3 + j;
       const classesForSquare =
-        winner && winner[1].includes(squareIndex) ? "square winner" : "square";
+        winner && winner.how.includes(squareIndex) ? "square winner" : "square";
       rows[i].push(
         <Square
           value={squares[squareIndex]}
@@ -78,7 +78,7 @@ export default function Game() {
 
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
-  const [changeIndex, setChangeIndex] = useState({});
+  const [changedIndex] = useState({});
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -109,9 +109,9 @@ export default function Game() {
       }
     }
     if (move == currentMove - 1) {
-      changeIndex[move] = changes.indexOf(true);
+      changedIndex[move] = changes.indexOf(true);
     }
-    console.log(changeIndex);
+    console.log(changedIndex);
     if (!toggleStatus) {
       move = history.length - 1 - move;
     }
@@ -121,11 +121,11 @@ export default function Game() {
       } else if (move >= 0) {
         description =
           move % 2 == 0
-            ? `X placed at [${Math.floor(changeIndex[move] / 3) + 1}, ${
-                (changeIndex[move] % 3) + 1
+            ? `X placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
+                (changedIndex[move] % 3) + 1
               }]`
-            : `O placed at [${Math.floor(changeIndex[move] / 3) + 1}, ${
-                (changeIndex[move] % 3) + 1
+            : `O placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
+                (changedIndex[move] % 3) + 1
               }]`;
       }
       return description;
@@ -164,7 +164,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return [squares[a], lines[i]];
+      return { who: squares[a], how: lines[i] };
     }
   }
   return null;
