@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Example() {
+export const Example = () => {
   const [value, setValue] = useState(0);
 
   return (
@@ -16,4 +16,4 @@ export function Example() {
       </button>
     </div>
   );
-}
+};
