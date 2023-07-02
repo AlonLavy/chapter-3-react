@@ -64,7 +64,10 @@ export const Game = () => {
     let description = (move) => {
       if (move == currentMove) {
         description = `You are at move ${move + 1}`;
-      } else if (move >= 0 && changedIndex[move]) {
+      } else if (
+        move >= 0 &&
+        (changedIndex[move] || changedIndex[move] === 0)
+      ) {
         description =
           move % 2 == 0
             ? `X placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
@@ -73,7 +76,7 @@ export const Game = () => {
             : `O placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
                 (changedIndex[move] % 3) + 1
               }]`;
-      } else {
+      } else if (!changedIndex[move]) {
         description = `It's ${move % 2 ? "X" : "O"}'s turn to play move ${
           move + 1
         }`;
