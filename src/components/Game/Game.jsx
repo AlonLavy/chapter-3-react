@@ -58,14 +58,13 @@ export const Game = () => {
     if (move == currentMove - 1) {
       changedIndex[move] = changes.indexOf(true);
     }
-    console.log(changedIndex);
     if (!toggleStatus) {
       move = history.length - 1 - move;
     }
     let description = (move) => {
       if (move == currentMove) {
-        description = `You are at move ${move}`;
-      } else if (move >= 0) {
+        description = `You are at move ${move + 1}`;
+      } else if (move >= 0 && changedIndex[move]) {
         description =
           move % 2 == 0
             ? `X placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
@@ -74,6 +73,10 @@ export const Game = () => {
             : `O placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
                 (changedIndex[move] % 3) + 1
               }]`;
+      } else {
+        description = `It's ${move % 2 ? "X" : "O"}'s turn to play move ${
+          move + 1
+        }`;
       }
       return description;
     };
@@ -91,7 +94,7 @@ export const Game = () => {
       </div>
       <div className="game-info">
         <ToggleSwitch />
-        <ol>{moves}</ol>
+        <ol reversed={!toggleStatus}>{moves}</ol>
       </div>
     </div>
   );
