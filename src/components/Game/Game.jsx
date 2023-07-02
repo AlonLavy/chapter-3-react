@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ReactSwitch from "react-switch";
 import { Board } from "../Board/Board";
+import { ToggleSwitch } from "../ToggleSwitch/ToggleSwitch";
 
 export const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -8,23 +8,6 @@ export const Game = () => {
   const [changedIndex] = useState({});
   const [toggleStatus, changeToggleStatus] = useState(true);
   const [description, setDescription] = useState("ascending");
-  const ToggleSwitch = () => {
-    const handleChange = () => {
-      changeToggleStatus(!toggleStatus);
-      if (toggleStatus) {
-        setDescription("decending");
-      } else {
-        setDescription("ascending");
-      }
-    };
-
-    return (
-      <div className="toggle">
-        <p>{description}</p>
-        <ReactSwitch checked={toggleStatus} onChange={handleChange} />
-      </div>
-    );
-  };
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -96,7 +79,12 @@ export const Game = () => {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ToggleSwitch />
+        <ToggleSwitch
+          description={description}
+          setDescription={setDescription}
+          toggleStatus={toggleStatus}
+          changeToggleStatus={changeToggleStatus}
+        />
         <ol reversed={!toggleStatus}>{moves}</ol>
       </div>
     </div>
