@@ -77,7 +77,7 @@ export const Game = () => {
                 (changedIndex[move] % 3) + 1
               }]`;
       } else if (!changedIndex[move]) {
-        description = `It's ${move % 2 ? "X" : "O"}'s turn to play move ${
+        description = `It's ${!(move % 2) ? "X" : "O"}'s turn to play move ${
           move + 1
         }`;
       }
