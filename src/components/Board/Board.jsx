@@ -31,6 +31,7 @@ export const Board = ({ xIsNext, squares, onPlay }) => {
           value={squares[squareIndex]}
           onSquareClick={() => handleClick(squareIndex)}
           className={classesForSquare}
+          keyValue={squareIndex}
         ></Square>
       );
     }

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Board } from "../Board/Board";
 import { ToggleSwitch } from "../ToggleSwitch/ToggleSwitch";
 import { Moves } from "../Moves/Moves";
+
+export const GameContext = createContext();
 
 export const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -23,33 +25,37 @@ export const Game = () => {
     setCurrentMove(nextMove);
   };
 
-  if (!toggleStatus) {
-    history.reverse();
-  }
-
   return (
-    <div className="game">
-      <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-      </div>
-      <div className="game-info">
-        <ToggleSwitch
-          description={description}
-          setDescription={setDescription}
-          toggleStatus={toggleStatus}
-          changeToggleStatus={changeToggleStatus}
-        />
-        <ol reversed={!toggleStatus}>
-          <Moves
-            currentSquares={currentSquares}
-            currentMove={currentMove}
-            history={history}
-            changedIndex={changedIndex}
-            toggleStatus={toggleStatus}
-            jumpTo={jumpTo}
+    <GameContext.Provider
+      value={{
+        history,
+        currentSquares,
+        currentMove,
+        changedIndex,
+        toggleStatus,
+        jumpTo,
+      }}
+    >
+      <div className="game">
+        <div className="game-board">
+          <Board
+            xIsNext={xIsNext}
+            squares={currentSquares}
+            onPlay={handlePlay}
           />
-        </ol>
+        </div>
+        <div className="game-info">
+          <ToggleSwitch
+            description={description}
+            setDescription={setDescription}
+            toggleStatus={toggleStatus}
+            changeToggleStatus={changeToggleStatus}
+          />
+          <ol reversed={!toggleStatus}>
+            <Moves />
+          </ol>
+        </div>
       </div>
-    </div>
+    </GameContext.Provider>
   );
 };

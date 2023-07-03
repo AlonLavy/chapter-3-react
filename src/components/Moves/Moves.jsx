@@ -1,11 +1,16 @@
-export const Moves = ({
-  currentSquares,
-  currentMove,
-  history,
-  changedIndex,
-  toggleStatus,
-  jumpTo,
-}) => {
+import React, { useContext } from "react";
+import { GameContext } from "../Game/Game"; // Assuming you have a GameContext defined in the Game component
+
+export const Moves = () => {
+  const {
+    currentSquares,
+    currentMove,
+    history,
+    changedIndex,
+    toggleStatus,
+    jumpTo,
+  } = useContext(GameContext);
+
   return history.map((_, move) => {
     const changes = [];
     for (let i = 0; i < currentSquares.length; i++) {
