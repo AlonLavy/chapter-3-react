@@ -1,4 +1,5 @@
 import { Square } from "../Square/Square";
+import * as CONSTANTS from "../../CONSTANTS.js";
 
 export const Board = ({ xIsNext, squares, onPlay }) => {
   const handleClick = (i) => {
@@ -20,11 +21,10 @@ export const Board = ({ xIsNext, squares, onPlay }) => {
     : "Next player: " + (xIsNext ? "X" : "O");
 
   const rows = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < CONSTANTS.boardLength; i++) {
     rows.push([]);
-    for (let j = 0; j < 3; j++) {
-      //magic number 3
-      const squareIndex = i * 3 + j;
+    for (let j = 0; j < CONSTANTS.boardLength; j++) {
+      const squareIndex = i * CONSTANTS.boardLength + j;
       const classesForSquare =
         winner && winner.how.includes(squareIndex) ? "square winner" : "square";
       rows[i].push(
