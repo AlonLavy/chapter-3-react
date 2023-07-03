@@ -1,9 +1,9 @@
 import ReactSwitch from "react-switch";
-import { ToggleContext } from "../Game/Game";
-import { useContext } from "react";
+import { useState } from "react";
+import { ListButton } from "../ListButton/ListButton";
 
 export const ToggleSwitch = () => {
-  const { toggleStatus, changeToggleStatus } = useContext(ToggleContext);
+  const [toggleStatus, changeToggleStatus] = useState(true);
   return (
     <div className="toggle">
       <p>{toggleStatus ? "decending" : "ascending"}</p>
@@ -11,6 +11,9 @@ export const ToggleSwitch = () => {
         checked={toggleStatus}
         onChange={() => changeToggleStatus(!toggleStatus)}
       />
+      <ol reversed={!toggleStatus}>
+        <ListButton toggleStatus={toggleStatus} />
+      </ol>
     </div>
   );
 };

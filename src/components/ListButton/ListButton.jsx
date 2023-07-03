@@ -1,15 +1,9 @@
 import React, { useContext } from "react";
 import { GameContext } from "../Game/Game";
 
-export const ListButton = () => {
-  const {
-    currentSquares,
-    currentMove,
-    history,
-    changedIndex,
-    toggleStatus,
-    jumpTo,
-  } = useContext(GameContext);
+export const ListButton = ({ toggleStatus }) => {
+  const { currentSquares, currentMove, history, changedIndex, jumpTo } =
+    useContext(GameContext);
 
   const description = (move) => {
     if (move === currentMove) {
