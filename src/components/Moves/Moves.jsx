@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GameContext } from "../Game/Game"; // Assuming you have a GameContext defined in the Game component
+import { GameContext } from "../Game/Game";
 
 export const Moves = () => {
   const {

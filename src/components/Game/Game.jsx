@@ -4,6 +4,7 @@ import { ToggleSwitch } from "../ToggleSwitch/ToggleSwitch";
 import { Moves } from "../Moves/Moves";
 
 export const GameContext = createContext();
+export const ToggleContext = createContext();
 
 export const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -26,36 +27,37 @@ export const Game = () => {
   };
 
   return (
-    <GameContext.Provider
-      value={{
-        history,
-        currentSquares,
-        currentMove,
-        changedIndex,
-        toggleStatus,
-        jumpTo,
-      }}
-    >
-      <div className="game">
-        <div className="game-board">
-          <Board
-            xIsNext={xIsNext}
-            squares={currentSquares}
-            onPlay={handlePlay}
-          />
+    <>
+      <GameContext.Provider
+        value={{
+          history,
+          currentSquares,
+          currentMove,
+          changedIndex,
+          toggleStatus,
+          jumpTo,
+        }}
+      >
+        <div className="game">
+          <div className="game-board">
+            <Board
+              xIsNext={xIsNext}
+              squares={currentSquares}
+              onPlay={handlePlay}
+            />
+          </div>
+          <div className="game-info">
+            <ToggleContext.Provider
+              value={{ toggleStatus, changeToggleStatus }}
+            >
+              <ToggleSwitch />
+            </ToggleContext.Provider>
+            <ol reversed={!toggleStatus}>
+              <Moves />
+            </ol>
+          </div>
         </div>
-        <div className="game-info">
-          <ToggleSwitch
-            description={description}
-            setDescription={setDescription}
-            toggleStatus={toggleStatus}
-            changeToggleStatus={changeToggleStatus}
-          />
-          <ol reversed={!toggleStatus}>
-            <Moves />
-          </ol>
-        </div>
-      </div>
-    </GameContext.Provider>
+      </GameContext.Provider>
+    </>
   );
 };

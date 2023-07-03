@@ -1,24 +1,16 @@
 import ReactSwitch from "react-switch";
+import { ToggleContext } from "../Game/Game";
+import { useContext } from "react";
 
-export const ToggleSwitch = ({
-  description,
-  setDescription,
-  toggleStatus,
-  changeToggleStatus,
-}) => {
-  const handleChange = () => {
-    changeToggleStatus(!toggleStatus);
-    if (toggleStatus) {
-      setDescription("decending");
-    } else {
-      setDescription("ascending");
-    }
-  };
-
+export const ToggleSwitch = () => {
+  const { toggleStatus, changeToggleStatus } = useContext(ToggleContext);
   return (
     <div className="toggle">
-      <p>{description}</p>
-      <ReactSwitch checked={toggleStatus} onChange={handleChange} />
+      <p>{toggleStatus ? "decending" : "ascending"}</p>
+      <ReactSwitch
+        checked={toggleStatus}
+        onChange={() => changeToggleStatus(!toggleStatus)}
+      />
     </div>
   );
 };
