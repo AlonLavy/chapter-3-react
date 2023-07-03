@@ -23,6 +23,7 @@ export const Board = ({ xIsNext, squares, onPlay }) => {
   for (let i = 0; i < 3; i++) {
     rows.push([]);
     for (let j = 0; j < 3; j++) {
+      //magic number 3
       const squareIndex = i * 3 + j;
       const classesForSquare =
         winner && winner.how.includes(squareIndex) ? "square winner" : "square";
@@ -40,9 +41,9 @@ export const Board = ({ xIsNext, squares, onPlay }) => {
   return (
     <>
       <div className="status">{status}</div>
-      <div className="board-row">{rows[0]}</div>
-      <div className="board-row">{rows[1]}</div>
-      <div className="board-row">{rows[2]}</div>
+      {rows.map((row) => {
+        return <div className="board-row">{row}</div>;
+      })}
     </>
   );
 };

@@ -1,7 +1,7 @@
-import React, { useState, createContext } from "react";
+import { useState, createContext } from "react";
 import { Board } from "../Board/Board";
 import { ToggleSwitch } from "../ToggleSwitch/ToggleSwitch";
-import { Moves } from "../Moves/Moves";
+import { ListButton } from "../ListButton/ListButton";
 
 export const GameContext = createContext();
 export const ToggleContext = createContext();
@@ -11,7 +11,6 @@ export const Game = () => {
   const [currentMove, setCurrentMove] = useState(0);
   const [changedIndex] = useState({});
   const [toggleStatus, changeToggleStatus] = useState(true);
-  const [description, setDescription] = useState("ascending");
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -53,7 +52,7 @@ export const Game = () => {
               <ToggleSwitch />
             </ToggleContext.Provider>
             <ol reversed={!toggleStatus}>
-              <Moves />
+              <ListButton />
             </ol>
           </div>
         </div>
