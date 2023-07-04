@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { GameContext } from "../Game/Game";
+import * as CONSTANTS from "../../CONSTANTS.js";
 
 export const ListButton = ({ toggleStatus }) => {
   const { currentSquares, currentMove, history, changedIndex, jumpTo } =
@@ -10,12 +11,12 @@ export const ListButton = ({ toggleStatus }) => {
       return `You are at move ${move + 1}`;
     } else if (move >= 0 && (changedIndex[move] || changedIndex[move] === 0)) {
       return move % 2 === 0
-        ? `X placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
-            (changedIndex[move] % 3) + 1
-          }]`
-        : `O placed at [${Math.floor(changedIndex[move] / 3) + 1}, ${
-            (changedIndex[move] % 3) + 1
-          }]`;
+        ? `X placed at [${
+            Math.floor(changedIndex[move] / CONSTANTS.boardLength) + 1
+          }, ${(changedIndex[move] % CONSTANTS.boardLength) + 1}]`
+        : `O placed at [${
+            Math.floor(changedIndex[move] / CONSTANTS.boardLength) + 1
+          }, ${(changedIndex[move] % CONSTANTS.boardLength) + 1}]`;
     } else if (!changedIndex[move]) {
       return `It's ${!(move % 2) ? "X" : "O"}'s turn to play move ${move + 1}`;
     }
