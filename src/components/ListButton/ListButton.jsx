@@ -45,7 +45,7 @@ export const ListButton = ({ toggleStatus }) => {
       move = history.length - 1 - move;
     }
     return (
-      <li key={move}>
+      <li key={`${move}`}>
         <button onClick={() => jumpTo(move)}>{description(move)}</button>
       </li>
     );
