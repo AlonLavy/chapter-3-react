@@ -9,15 +9,18 @@ export const ListButton = ({ toggleStatus }) => {
   const description = (move) => {
     if (move === currentMove) {
       return `You are at move ${move + 1}`;
-    } else if (move >= 0 && (changedIndex[move] || changedIndex[move] === 0)) {
+    } else if (
+      move >= 0 &&
+      (changedIndex.current[move] || changedIndex.current[move] === 0)
+    ) {
       return move % 2 === 0
         ? `X placed at [${
-            Math.floor(changedIndex[move] / CONSTANTS.boardLength) + 1
-          }, ${(changedIndex[move] % CONSTANTS.boardLength) + 1}]`
+            Math.floor(changedIndex.current[move] / CONSTANTS.boardLength) + 1
+          }, ${(changedIndex.current[move] % CONSTANTS.boardLength) + 1}]`
         : `O placed at [${
-            Math.floor(changedIndex[move] / CONSTANTS.boardLength) + 1
-          }, ${(changedIndex[move] % CONSTANTS.boardLength) + 1}]`;
-    } else if (!changedIndex[move]) {
+            Math.floor(changedIndex.current[move] / CONSTANTS.boardLength) + 1
+          }, ${(changedIndex.current[move] % CONSTANTS.boardLength) + 1}]`;
+    } else if (!changedIndex.current[move]) {
       return `It's ${!(move % 2) ? "X" : "O"}'s turn to play move ${move + 1}`;
     }
     return "";
@@ -36,7 +39,7 @@ export const ListButton = ({ toggleStatus }) => {
     }
 
     if (move === currentMove - 1) {
-      changedIndex[move] = changes.indexOf(true);
+      changedIndex.current[move] = changes.indexOf(true);
     }
     if (!toggleStatus) {
       move = history.length - 1 - move;
